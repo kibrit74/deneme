@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Ürün Değerlendirme Uygulaması</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <!-- TinyMCE 4 script dosyasının yolu -->
+    <script src="/static/path/to/tinymce.min.js"></script>
+    <!-- TinyMCE 4 konfigürasyonu -->
+    <script>
+        tinymce.init({
+            selector: 'textarea#content',
+            height: 500,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 14px }'
+        });
+    </script>
+</head>
+
+<body>
+    <form method="post" action="/editor">
+        <!-- TinyMCE 4'ü göstermek için bir textarea -->
+        <textarea id="content" name="content">{{ current_text }}</textarea>
+        <button type="submit">Kaydet</button>
+    </form>
+</body>
+
+</html>

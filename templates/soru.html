@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Ürün Değerlendirme Uygulaması</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<form>
+    <p>Sadece bir fotoğraf yükleyin ve 'Gönder' butonuna tıklayarak ürün değerlendirmesini anında öğrenin! Saniyeler içinde, yorumların genel eğilimi, aldıkları puanlar ve genel değerlendirme karşınızda olacak. Nokta atış alışveriş yaparak zamandan ve paradan tasarruf edin. Artık alışverişin keyfini çıkarmak hiç bu kadar kolay olmamıştı!</p>
+</form>
+<body>
+    <form id="imageForm" enctype="multipart/form-data">
+        <label for="imageInput">Resim Seç:</label>
+        <input type="file" id="imageInput" name="image" accept="image/*" required>
+        <input type="text" id="productNameInput" name="product_name" required>
+
+        <button type="button" onclick="generateContent()">Gönder</button>
+
+        <!-- Bekleme mesajı ve animasyon -->
+        <div id="loading" class="loading">
+            Yapay zekanın cevabı dönene kadar lütfen bekleyiniz...
+        </div>
+
+        <!-- Cevap alanı -->
+        <div id="contentResult"></div>
+    </form>
+
+    <script>
+        function generateContent() {
+            // Temizleme işlemi: Cevap alanını ve bekleyen mesajı temizle
+            document.getElementById("contentResult").innerText = "";
+            document.getElementById("loading").classList.remove("active");
+            
+            var formData = new FormData(document.getElementById("imageForm"));
+    
+            // Bekleme mesajını göster
+            document.getElementById("loading").classList.add("active");
+            
+            fetch("/generate-content", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Bekleme mesajını gizle
+                document.getElementById("loading").classList.remove("active");
+    
+                // Cevabı ekle
+                document.getElementById("contentResult").innerText = data.content;
+            });
+        }
+    </script>
+</body>
+
+</html>
+{% endblock %}

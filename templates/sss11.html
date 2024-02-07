@@ -1,0 +1,409 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+    {% set gosterilen_soru_sayisi = 20 %}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sık Sorulan Sorular</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+
+        body > header > h4 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border: 0 solid #042339;
+            border-radius: 10px;
+        }
+
+        header a {
+            color: #fff;
+            margin: 0 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        h3 {
+            color: #042339;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: #042339;
+        }
+
+        button {
+            background-color: #042339;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        /* Yeni eklenen stiller */
+        .cevap-form {
+            display: none;  /* Cevap formunu varsayılan olarak gizle */
+        }
+
+        .gizli-soru {
+            display: none;
+        }
+
+    </style>
+
+
+<body>
+    
+
+    {% extends 'base.html' %}
+
+    {% block title %}Profil{% endblock %}
+    
+    {% block content %}
+        {% set gosterilen_soru_sayisi = 20 %}
+    
+        <!DOCTYPE html>
+        <html lang="tr">
+    
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Sık Sorulan Sorular</title>
+            <link rel="stylesheet" href="/static/css/styles.css">
+            <style>
+                body {
+                    font-family: 'Arial', sans-serif;
+                    background-color: #ffffff;
+                    color: #333;
+                    margin: 0;
+                    padding: 0;
+                    font-size: 14px;
+                    line-height: 1.4;
+                }
+    
+                header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: #042339;
+                    padding: 10px;
+                }
+    
+                body>header>h4 {
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+    
+                #logo-container {
+                    display: flex;
+                    align-items: center;
+                }
+    
+                #logo-container img {
+                    width: 100px;
+                    height: 100px;
+                    border: 0 solid #042339;
+                    border-radius: 10px;
+                }
+    
+                header a {
+                    color: #fff;
+                    margin: 0 20px;
+                    margin-bottom: 10px;
+                    text-decoration: none;
+                }
+    
+                form {
+                    max-width: 800px;
+                    margin: 20px auto;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+                }
+    
+                h3 {
+                    color: #042339;
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                }
+    
+                p {
+                    margin-bottom: 15px;
+                    line-height: 1.6;
+                }
+    
+                strong {
+                    color: #042339;
+                }
+    
+                button {
+                    background-color: #042339;
+                    color: #fff;
+                    border: none;
+                    padding: 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                    margin-right: 10px;
+                }
+    
+                button:hover {
+                    background-color: #555;
+                }
+    
+           
+                
+                .gizli-soru {
+                    display: none;
+                }
+    
+                .only-for-guest {
+                    display: none;  /* Sadece misafirler için görünür olan kısmı gizle */
+                }
+    
+            </style>
+        </head>
+    
+        <body>
+            <!-- ... (Diğer HTML kodları) ... -->
+    
+            {% if current_user.is_authenticated %}
+                <!-- Üye olanlar için sadece cevap formunu göster -->
+                <ul id="sorular">
+                    {% for soru in sorular|reverse %}
+                        <li {% if loop.index > 20 %}class="gizli-soru"{% endif %}>
+                            <strong>{{ soru.soru_sahibi_adi }}</strong>: {{ soru.soru_icerik }}
+                            <a href="#" class="cevap-yaz-link" data-soru-id="{{ soru.id }}">Cevap Yaz</a>
+                            <div class="cevap-form" id="cevap-form-{{ soru.id }}">
+                                <!-- Cevap Ekleme Formu -->
+                                <form method="POST" action="{{ url_for('cevap_ver', soru_id=soru.id) }}">
+                                    <label for="cevap_icerik">Cevap yaz:</label>
+                                    <strong>{{ current_user.username }}</strong>
+                                    <input type="hidden" name="cevap_sahibi_adi" id="cevap_sahibi_adi" value="{{ current_user.username }}">
+                                    <input type="text" name="cevap_icerik" id="cevap_icerik" placeholder="Cevabınızı buraya yazın" style="width: 250px; height: 38px;" required>
+                                    <p></p>
+                                    <button type="submit">Cevap Ver</button>
+                                </form>
+                            </div>
+                            <ul id="cevaplar-{{ soru.id }}">
+                                {% for cevap in cevaplar %}
+                                    {% if cevap.soru_id == soru.id %}
+                                        <li>
+                                            <strong>{{ cevap.cevap_sahibi_adi}}</strong>: {{ cevap.cevap_icerik }}
+                                            {% if cevap.user == current_user %}
+                                                <a href="#" onclick="cevapSil('{{ cevap.id }}')">Cevap Sil</a>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    {% if sorular|length > 20 %}
+                        <p></p>
+                        <button id="daha-fazla-btn">Daha Fazla Soru Göster</button>
+                        <li class="gizli-soru" id="daha-fazla-sorular"></li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <!-- Üye olmayanlar için hem soru hem de cevap formunu göster -->
+                <ul id="sorular">
+                    {% for soru in sorular|reverse %}
+                        <li {% if loop.index > 20 %}class="gizli-soru"{% endif %}>
+                            <strong>{{ soru.soru_sahibi_adi }}</strong>: {{ soru.soru_icerik }}
+                            <a href="#" class="cevap-yaz-link" data-soru-id="{{ soru.id }}">Cevap Yaz</a>
+                            <div class="cevap-form" id="cevap-form-{{ soru.id }}">
+                                <!-- Cevap Ekleme Formu -->
+                                <form method="POST" action="{{ url_for('cevap_ver', soru_id=soru.id) }}" {% if soru.user == current_user %}style="display: none;"{% endif %}>
+                                    <label for="cevap_icerik">Cevap yaz:</label>
+                                    <div class="only-for-guest">
+                                        <label for="cevap_sahibi_adi">Kullanıcı Adı:</label>
+                                        <input type="text" name="cevap_sahibi_adi" id="cevap_sahibi_{{ soru.id }}" style="width: 150px;" required>
+                                    </div>
+                                    <input type="text" name="cevap_icerik" id="cevap_icerik" placeholder="Cevabınızı buraya yazın" style="width: 250px; height: 38px;" required>
+                                    <p></p>
+                                    <button type="submit">Cevap Ver</button>
+                                </form>
+                            </div>
+                            <ul id="cevaplar-{{ soru.id }}">
+                                {% for cevap in cevaplar %}
+                                    {% if cevap.soru_id == soru.id %}
+                                        <li>
+                                            <strong>{{ cevap.cevap_sahibi_adi}}</strong>: {{ cevap.cevap_icerik }}
+                                            {% if cevap.user == current_user %}
+                                                <a href="#" onclick="cevapSil('{{ cevap.id }}')">Cevap Sil</a>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    {% if sorular|length > 20 %}
+                        <p></p>
+                        <button id="daha-fazla-btn">Daha Fazla Soru Göster</button>
+                        <li class="gizli-soru" id="daha-fazla-sorular"></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+    
+            <!-- Ana Soru Ekleme Formu -->
+            <form method="POST" action="{{ url_for('soru_sor') }}" id="soru-form">
+                <label for="soru_icerik">Soru sor:</label>
+                <div id="soruSahibiAdiDiv">
+                    {% if current_user.is_authenticated %}
+                        <input type="hidden" name="soru_sahibi_adi" id="soru_sahibi_adi" value="{{ current_user.username }}">
+                    {% else %}
+                        <div class="only-for-guest">
+                            <label for="soru_sahibi_adi">Kullanıcı Adı:</label>
+                            <input type="text" name="soru_sahibi_adi" id="soru_sahibi_adi" style="width: 250px;" required>
+                        </div>
+                    {% endif %}
+                </div>
+                <input type="text" name="soru_icerik" id="soru_icerik" placeholder="Sorunuzu buraya yazın" style="width: 550px; height: 70px;" required>
+                <p></p>
+                <button type="submit">Soru Sor</button>
+            </form>
+    
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <<script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.querySelectorAll('.cevap-form').forEach(function (cevapForm) {
+                        // cevapForm.style.display = 'none';  // Cevap formunu varsayılan olarak gizle
+                    });
+    
+                    document.querySelectorAll('.cevap-yaz-link').forEach(function (cevapYazLink) {
+                        cevapYazLink.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            var soruId = $(this).data('soru-id');
+                            $('#cevap-form-' + soruId).toggle();
+                        });
+                    });
+                });
+    
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Sayfa yüklendiğinde kullanıcının adını al
+                    var kullaniciAdi = "{{ current_user.username }}" || "Misafir";
+    
+                    // Formdaki ad alanını güncelle
+                    document.getElementById('soru_sahibi_adi').value = kullaniciAdi;
+                });
+    
+                function cevapSil(cevapId) {
+                    alert('Cevap silme işlemi: ' + cevapId);
+                }
+    
+                document.addEventListener('DOMContentLoaded', function () {
+                    var kullaniciAdiContainer = document.getElementById('kullanici-adi-container');
+                    var kullaniciAdiElement = document.getElementById('kullanici-adi');
+                    var soruSahibiAdiInput = document.getElementById('soru_sahibi_adi');
+    
+                    // Sayfa yüklendiğinde kontrol et ve gerekirse kullanıcı adını göster
+                    if ({{ current_user.is_authenticated | lower }}) {
+                        // Kullanıcı giriş yapmışsa
+                        kullaniciAdiContainer.style.display = 'block';
+                        kullaniciAdiElement.innerText = "{{ current_user.username }}";
+                        soruSahibiAdiInput.value = "{{ current_user.username }}";
+                    } else {
+                        // Kullanıcı giriş yapmamışsa
+                        kullaniciAdiContainer.style.display = 'none';
+                    }
+                });
+    
+                document.addEventListener('DOMContentLoaded', function () {
+                    var soruSahibiAdiDiv = document.getElementById('soruSahibiAdiDiv');
+    
+                    if (soruSahibiAdiDiv && !{{ current_user.is_authenticated }}) {
+                        soruSahibiAdiDiv.style.display = 'block';
+                    } else {
+                        soruSahibiAdiDiv.style.display = 'none';
+                    }
+                });
+    
+                document.addEventListener('DOMContentLoaded', function () {
+                    var gosterilenSoruSayisi = {{ gosterilen_soru_sayisi }};
+                    var dahaFazlaBtn = document.getElementById('daha-fazla-btn');
+    
+                    dahaFazlaBtn.addEventListener('click', function () {
+                        // Gizli olan soruları göster
+                        var gizliSorular = document.querySelectorAll('.gizli-soru');
+    
+                        gizliSorular.forEach(function (gizliSoru) {
+                            gizliSoru.classList.remove('gizli-soru');
+                        });
+    
+                        // Gösterilen soru sayısını güncelle
+                        gosterilenSoruSayisi += gizliSorular.length;
+    
+                        // Eğer tüm sorular gösterildiyse daha fazla göster linkini gizle
+                        if (gosterilenSoruSayisi >= {{ sorular | length }}) {
+                            dahaFazlaBtn.style.display = 'none';
+                        }
+                    });
+                });
+    
+            </script>
+    
+            <!-- ... (Diğer HTML kodları) ... -->
+    
+        </body>
+    
+        </html>
+    {% endblock %}
+    

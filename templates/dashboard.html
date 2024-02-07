@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Hoş Geldiniz, {{ current_user.username }}!</title>
+    <style>
+        /* Header Stili */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+    
+
+nav {
+    background-color: #454c55;
+    overflow: hidden;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    float: left;
+    margin-right: 20px;
+}
+
+nav a {
+    display: block;
+    color: #fff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+@media only screen and (max-width: 600px) {
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        float: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+        }
+
+        /* Form genişliği 1200px */
+        form {
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden; /* Clearfix için */
+        }
+
+        /* Kullanıcı bilgileri tablosu genişliği 900px */
+    .user-info-table {
+        width: 900px;
+        margin: left; /* Ortala */
+    }
+
+    /* Diğer tablo genişliği 100% */
+    .other-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px; /* Boşluk ekledim */
+        margin-left: 0; /* Tabloyu sola yasla */
+    }
+
+    /* Form genişliği 100% */
+    form {
+        max-width: 100%;
+        margin: auto;
+        overflow: hidden; /* Clearfix için */
+    }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #042339;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* Action button stil */
+        .action-buttons {
+            margin-top: 10px;
+        }
+
+        /* Detay butonu stil */
+        .show-details-button {
+            background-color: #042339;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .show-details-button:hover {
+            background-color: #657266;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Çıkış Yap Butonu -->
+<div class="user-menu">
+    
+        
+    
+</div>
+    <!-- Header -->
+    <header>
+        <div id="logo-container">
+            <img src="/static/logo.jpg" alt="Nedir Resmi" width="120" height="129">
+        </div>
+        <a href="{{ url_for('logout') }}">Çıkış Yap</a>
+    </header>
+
+    <!-- Diğer Tablo -->
+    <form method="post" action="{{ url_for('process_users') }}">
+        <h1>ADMİN: {{ current_user.username }}!</h1>
+        <div class="user-info-table">
+            <table>
+                <h3>Kullanıcı Listesi</h3>
+                <tr>
+                    <td>Toplam Kullanıcı :</td>
+                    <td>{{ total_users }}</td>
+                </tr>
+                <tr>
+                    <td>Son Bir Haftada Üye Olan Kullanıcı Sayısı:</td>
+                    <td>{{ new_users_last_week }}</td>
+                </tr>
+                <tr>
+                    <td>Toplam Yapılan Arama Sayısı:</td>
+                    <td>{{ total_search_history }}</td>
+                </tr>
+                <td>Fom Alanı Bilgileri</td>
+                <tr>
+                    <td>Toplam Soru Sayısı:</td>
+                    <td>{{ toplam_soru_sayisi }}</td>
+
+                </tr>
+                
+                <tr>
+                    <td>Son 1 Haftaklık Soru Sayısı</td>
+                    <td>{{ toplam_soru_sayisi_last_week }}</td>
+                </tr>
+                
+
+            </table>
+            
+        </div>
+            </table>
+        </div>
+        <div class="other-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Seç</th>
+                        <th> ID</th>
+                        <th>Kullanıcı Adı</th>
+                        <th>Email</th>
+                        <th>Arama Sayısı</th>
+                        <th>Üye Olma Tarihi</th>
+                        <th>Detayları Göster</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_users" value="{{ user.id }}"></td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user_search_counts.get(user.id, 0) }}</td>
+                        <td>{{ user.created_at.strftime('%d.%m.%Y') }}</td>
+                        
+
+                        <td><a class="show-details-button" href="{{ url_for('user_details', user_id=user.id) }}">Detayları Göster</a></td>
+                    </tr>
+                {% endfor %}
+
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="submit" name="action" value="delete" onclick="return confirm('Seçili kullanıcıları silmek istediğinizden emin misiniz?')">Seçili Kullanıcıları Sil</button>
+                <!-- Diğer işlemleri ekleyin -->
+            </div>
+        </div>
+    </form>
+
+    <!-- ... -->
+
+</body>
+
+</html>

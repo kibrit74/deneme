@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Ürün Değerlendirme Uygulaması</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <form>
+        <p>
+            <h4 style="color: black;">Hoş geldiniz! Yapay Zeka Gücüyle Alışverişi Yeniden Keşfet uygulamamıza adım attığınız için teşekkür ederiz.</h4>
+        </p>
+    </form>
+
+    <form>
+        <img src="/static/nedir.jpg" alt="Nedir Resmi" width="120" height="129" style="border-radius: 10px;">
+        <p>
+            <h2>Nedir?</h2>
+        </p>
+        
+      <h4 style="color: #042339;"><p>Alışverişinizi Zaman ve Para Tasarrufuyla Yönlendirin!</p></h4>
+        
+        <p>
+            Yapay zeka destekli bu uygulama, gönderdiğiniz fotoğraflar aracılığıyla alışveriş deneyiminizi dönüştürüyor.
+            Ürünleri tanıma, kullanıcı yorumlarını ve değerlendirme puanlarını analiz etme yeteneği sayesinde, hem zamandan
+            hem de paradan tasarruf ederek daha bilinçli alışveriş yapabilirsiniz.
+        </p>
+    </form>
+
+    <form>
+        <img src="/static/nasil.jpg" alt="Nedir Resmi" width="120" height="129" style="border-radius: 10px;">
+        <p>
+            <h2>Nasıl Çalışır?</h2>
+        </p>
+        <p>
+            <h4 style="color: #042339;"><p>Adım 1: Hızlı Üyelik</p></h4>
+        </p>
+        <p>
+            Uygulamamıza hemen üye olun! "Üye Ol" butonuna tıklayarak kişisel bilgilerinizi girebilir ve kayıt işlemini
+            tamamlayabilirsiniz.
+        </p>
+        <p>
+            <h4 style="color: #042339;"><p></p> Adım 2: Fotoğraf Gönder</p></h4>
+        </p>
+        <p>
+            Alışveriş yapmak istediğiniz ürünün fotoğrafını yükleyin. Yapay zeka modelimiz, gönderdiğiniz fotoğrafı
+            analiz ederek ürünleri tanıyacak ve inceleyecektir.
+        </p>
+        <p>
+            <h4 style="color: #042339;"><p> Adım 3: Akıllı Analiz</p></h4>
+        </p>
+        <p>
+            Modelimiz, ürünle ilgili yüzlerce yorumu ve değerlendirme puanlarını tarayarak olumlu ve olumsuz özellikleri
+            belirleyecektir. Bu sayede, alışverişinizi daha bilinçli bir şekilde yönlendirebilirsiniz.
+        </p>
+        <p>
+            <h4 style="color: #042339;"><p> Adım 4: Bilgili Alışveriş</p></h4>
+        </p>
+        <p>
+            Sonuç sayfasında, analizlerle elde edilen bilgileri göreceksiniz. En iyi fiyatı, en kaliteli ürünü ve
+            kullanıcıların beğendiği özellikleri keşfedin.
+        </p>
+        <p>
+            <h4 style="color: #042339;"><p></p>Adım 5: Zaman ve Para Tasarrufu</p></h4>
+        </p>
+        <p>
+            Yapay zeka destekli alışveriş rehberimizle, alışveriş yaparken hem zamandan hem de paradan tasarruf edin.
+            Keyifli alışveriş deneyiminin tadını çıkarın!
+        </p>
+        <div>
+    
+
+{% if not session.get('user') %}
+            <button type="button" onclick="window.location.href='/kayit'">Üye Ol</button>
+            <button type="button" onclick="window.location.href='/giris'">Giriş Yap</button>
+
+            {% endif %}
+        </div>
+    </form>
+</body>
+
+</html>
+{% endblock %}

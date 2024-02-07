@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search History Example</title>
+    <!-- Bootstrap CSS dosyasını bağla -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <script>
+        // Assuming the Flask app is running locally on port 5000
+        fetch("http://localhost:5000/search-history?search_query=your_search_term")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Burada alınan verileri kullanarak istediğiniz görselleştirmeyi yapabilirsiniz.
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+    <!-- Bootstrap JavaScript dosyalarını bağla -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    
+<header>
+  <div id="logo-container">
+      <img src="/static/logo.jpg" alt="Nedir Resmi" width="120" height="129">
+  </div>
+</header>
+<link rel="stylesheet" href="/static/css/styles.css">
+  <div class="user-form">
+    <form method="POST" action="{{ url_for('login') }}">
+      <label for="username">Kullanıcı Adı:</label>
+      <input type="text" id="username" name="username" placeholder="Kullanıcı adınızı girin">
+
+      <label for="password">Parola:</label>
+      <input type="password" id="password" name="password" placeholder="Parolanızı girin">
+
+      <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+
+      <button type="submit">Giriş Yap</button>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if user %}
+      <h1>Zaten oturum açtınız. Çıkış yaparak kayıt olabilirsiniz.</h1>
+      <div id="slogan">
+        <a href="/cikis">Çıkış Yap</a>
+      </div>
+    {% endif %}
+  </div>
+

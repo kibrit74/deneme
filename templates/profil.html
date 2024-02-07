@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Ürün Değerlendirme Uygulaması</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <form>
+        <h3>Merhaba!</h5>
+        
+        <p>Yapay Zeka Gücüyle Alışverişi Yeniden Keşfet uygulamamıza hoş geldiniz. Bu uygulama, gönderdiğiniz fotoğraflara bakarak ürünleri tanıyan ve değerlendiren bir yapay zeka modeli üzerine kurulmuştur.</p>
+    
+        <p>Eğer henüz üye değilseniz, lütfen "Üye Ol" butonuna tıklayarak kayıt işlemini gerçekleştirin. Kayıt olduktan sonra "Giriş Yap" butonu ile uygulamaya giriş yapabilir ve ürün değerlendirmelerinizi yapabilirsiniz.</p>
+    
+        <p><strong>Üye Ol</strong></p>
+        <p>Bu butona tıklayarak uygulamamıza üye olabilir ve yapay zeka destekli ürün değerlendirme deneyimine katılabilirsiniz. Bilgilerinizi güvenli bir şekilde saklıyoruz.</p>
+    
+        <p><strong>Giriş Yap</strong></p>
+        <p>Eğer zaten üyeyseniz, "Giriş Yap" butonu ile kayıtlı bilgilerinizle uygulamaya giriş yapabilir, ürünleri değerlendirebilir ve değerlendirmelerinizi takip edebilirsiniz.</p>
+    
+        <p>Uygulamamızı kullanırken keyifli vakit geçirmenizi dileriz. Sorularınız veya sorunlarınız için her zaman bize ulaşabilirsiniz.</p>
+    
+        <div>
+            <button type="button" onclick="window.location.href='/kayit'">Üye Ol</button>
+            <button type="button" onclick="window.location.href='/giris'">Giriş Yap</button>
+        </div>
+    </form>
+    
+</body>
+
+</html>
+{% endblock %}

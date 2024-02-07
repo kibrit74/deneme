@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  
+        /* Diğer CSS kuralları buraya eklenebilir */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #042339;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border: 0px solid #042339;
+        }
+
+        header a {
+            color: #fff;
+            margin: 0 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        nav {
+            background-color: #454c55;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+            margin-right: 20px;
+        }
+
+        nav a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        @media only screen and (max-width: 600px) {
+            nav {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                float: none;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        h4 {
+            margin: 0;
+            color: #ffffff;
+            margin-right: auto;
+            display: block;
+        }
+
+        @media only screen and (max-width: 600px) {
+            nav a {
+                float: none;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        form {
+            max-width: 350px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #042339;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #042339;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #042339;
+        }
+
+        #contentResult {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #ffffff;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+            animation: pulse 1s infinite;
+        }
+
+        /* "soru.html" sayfasından alınan CSS özellikleri */
+        .login-text {
+            font-size: 16px;
+            color: #042339;
+        }
+
+        .login-link {
+    color: #042339 !important;
+    font-size: 19px;
+    border-bottom: 1px solid #042339;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+        .login-link:hover {
+            color: #333;
+        }
+</style>
+    <div class="user-form">
+        
+        <form method="POST" action="/kayit">
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" name="username" required><br>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+        
+            <label for="password">Şifre:</label>
+            <input type="password" id="password" name="password" required><br>
+        
+            <label for="password_repeat">Şifre Tekrar:</label>
+            <input type="password" id="password_repeat" name="password_repeat" required><br>
+        
+            <button type="submit">Kayıt Ol</button>
+
+            <div class="user-form">
+                <form method="POST" action="/kayit">
+                    <!-- "Giriş Yap" yazısına "login-text" sınıfını ekleyin -->
+                    <p class="login-text">Zaten üyeyseniz <a href="giris">Giriş yap</a>
+                </form>
+            
+                {% if error_message %}
+                    <p style="color: red;">{{ error_message }}</p>
+                {% endif %}
+            </div>
+        </form>
+        
+        
+        
+    
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

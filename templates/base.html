@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #042339;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border: 0 solid #042339;
+        }
+
+        h4 {
+            margin: 0;
+            color: #ffffff;
+            margin-right: auto;
+            display: block;
+        }
+
+        nav {
+            background-color: #454c55;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+            margin-right: 20px;
+        }
+
+        nav a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        #content {
+            margin: 20px;
+        }
+
+        .active {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="logo-container">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo">
+        </div>
+
+        <h4> Yapay Zeka Gücüyle Alışverişi Yeniden Keşfet. </h4>
+    </header>
+
+    <nav id="menu">
+        <ul>
+            <li class="{% if request.path == '/' %}active{% endif %}">
+                <a href="/">Anasayfa</a>
+            </li>
+
+            {% if session.get('user') %}
+                <li class="{% if request.path == '/profildata' %}active{% endif %}">
+                    <a href="/profildata">Profil</a>
+                </li>
+                <li class="{% if request.path == '/soru' %}active{% endif %}">
+                    <a href="/soru">Ürün Ara</a>
+                </li>
+                <li class="{% if request.path == '/karsi' %}active{% endif %}">
+                    <a href="/karsi">Ürün Karşılaştırma</a>
+                </li>
+            {% else %}
+                <li class="{% if request.path == '/profil' %}active{% endif %}">
+                    <a href="/profil">Profil </a>
+                </li>
+            {% endif %}
+
+            <li class="{% if request.path == '/contact' %}active{% endif %}">
+                <a href="/sss1">Sıkça Sorulan Sorular</a>
+            </li>
+
+            {% if not session.get('user') %}
+                <li class="{% if request.path == '/kayit' %}active{% endif %}">
+                    <a href="/kayit">Üye Ol</a>
+                </li>
+                <li class="{% if request.path == '/giris' %}active{% endif %}">
+                    <a href="/giris">Giriş Yap</a>
+                </li>
+            {% endif %}
+
+            {% if session.get('user') %}
+                <li>
+                    <a href="/cikis">Çıkış Yap</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Karşılaştırma</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <form>
+        <p>Ürün karşılaştırma hizmetimizi kullanmaya karar verdiğiniz için teşekkür ederiz. Sizden ricamız, işlemi daha etkili hale getirmek ve size en iyi sonuçları sunabilmek adına iki önemli kurala dikkat etmenizdir: </p>
+        <p>   İlk olarak, karşılaştırmak istediğiniz ürünlerin resimlerini bize göndermeyi unutmayınız. İki resim alanınında doldurlmaması durumunda sistem hata verecektir. Bu, yapay zekanın ürünlerin teknik ve fiziksel özelliklerini en etkili şekilde analiz edebilmesine katkı sağlayacaktır.</p>
+        <p>    Sadece resimlerle yetinmeyin. Daha kesin ve güçlü sonuçlar elde etmek için ürün isimlerini ve kodlarını da eklemeyi ihmal etmeyiniz. Bu, yapay zekanın, sizin için en uygun ürünü belirleme sürecinde daha fazla bilgiye erişim sağlamasına yardımcı olacaktır.</p>
+        <p>   Bu kurallara uyduğunuz takdirde, alışveriş deneyiminizin daha doğru ve tatmin edici olacağını garanti edebiliriz. Hadi, başlayalım ve size en uygun ürünü bulalım! </p>
+    </form>
+  <form id="comparisonForm" enctype="multipart/form-data">
+    <label for="image1">Resim 1 Seçin:</label>
+    <input type="file" name="image1" accept="image/*" required>
+
+    <label for="product_name">Ürün Adı:</label>
+    <input type="text" name="product_name_1" placeholder="Ürün adını girin..." required>
+
+    <label for="image2">Resim 2 Seçin:</label>
+    <input type="file" name="image2" accept="image/*" required>
+
+    <label for="product_name">Ürün Adı:</label>
+    <input type="text" name="product_name_2" placeholder="Ürün adını girin..." required>
+
+    <button type="button" onclick="generateContent()">Gönder</button>
+    <p></p>
+    <div id="loading" class="loading">
+        Yapay zekanın cevabı dönene kadar lütfen bekleyiniz...
+    </div>
+    
+    <div id="result"></div>
+  </form>
+  
+  <script>
+    function generateContent() {
+      var resultElement = document.getElementById("result");
+      var loadingElement = document.getElementById("loading");
+  
+      if (!resultElement || !loadingElement) {
+        console.error("Element not found");
+        return;
+      }
+  
+      resultElement.innerText = "";
+      loadingElement.classList.remove("active");
+  
+      var formData = new FormData(document.getElementById("comparisonForm"));
+  
+      loadingElement.classList.add("active");
+  
+      fetch("/generate-content", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        loadingElement.classList.remove("active");
+        resultElement.innerText = data.content;
+      })
+      .catch(error => {
+        console.error("Model ile iletişim hatası:", error);
+        loadingElement.classList.remove("active");
+        resultElement.innerText = "Model ile iletişim hatası.";
+      });
+    }
+  </script>
+</body>
+</html>
+{% endblock %}

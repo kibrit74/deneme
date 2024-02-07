@@ -1,0 +1,505 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Ürün Değerlendirme Uygulaması</title>
+
+    <!-- Bootstrap CSS dosyasını bağla -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #042339;
+            margin: 0;
+            padding: 0;
+            font-size: 16px; /* Metin boyutu */
+            line-height: 1.4; /* Paragraf aralığı */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+
+        body > header > h4 {
+            font-size: 16px; /* Veya istediğiniz başlık boyutu */
+            font-weight: bold;
+        }
+
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border: 0 solid #042339;
+            border-radius: 10px;
+        }
+
+        header a {
+            color: #fff;
+            margin: 0 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        nav {
+            background-color: #454c55;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+            margin-right: 20px;
+        }
+
+        nav a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: color 0.3s, font-size 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #555;
+            color: #fff; /* Tıklandığında rengi değiştirme */
+        }
+
+        #profile-container {
+            max-width: 750px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        #profile-image img {
+            width: 100px;
+            height: 100px;
+            border: 0px solid #042339;
+            border-radius: 10px;
+        }
+
+        #username {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        #recent-searches {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        #recent-searches h1 {
+            color: #042339;
+            font-size: 18px;
+        }
+
+        #recent-searches ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #recent-searches li {
+            margin-bottom: 10px;
+        }
+
+        .search-link,
+        .search-link-all {
+            font-size: 16px; /* Yazı boyutunu 12px olarak güncelle */
+            cursor: pointer;
+            text-decoration: underline; /* Yazı stilini altı çizili yap */
+        }
+
+        .search-link-all {
+            color: #042339; /* Detayları Göster link rengini belirt */
+        }
+
+        .search-link {
+            color: black; /* Son 5 arama link rengini siyah yap */
+        }
+
+        #all-searches-container {
+            display: none;
+            margin-top: 20px; /* Aramalar arasındaki boşluğu ayarlamak için */
+        }
+
+        .all-searches-title {
+            font-style: italic; /* Yazı stilini italik yap */
+            margin-bottom: 10px;
+        }
+
+        #show-all-searches-btn {
+            color: #fff;
+            background-color: #042339;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #show-all-searches-btn:hover {
+            background-color: #555;
+        }
+        
+        #search-btn-all {
+            background-color: #042339; /* Buton rengini istediğiniz renk koduyla değiştirin */
+            color: #ffffff; /* Buton metin rengini istediğiniz renk koduyla değiştirin */
+        }
+        #search-btn-all:hover {
+            background-color: #555;
+        }
+        
+        #all-searches {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        #all-searches h1 {
+            color: #042339;
+            font-size: 18px;
+        }
+
+        #all-searches ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #all-searches li {
+            margin-bottom: 10px;
+        }
+
+        #all-searches a {
+            color: #042339;
+            font-size: 12px; /* Yazı boyutunu 12px olarak güncelle */
+            text-decoration: underline; /* Yazı stilini altı çizili yap */
+            cursor: pointer;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+            color: #042339;
+        }
+
+        #search-modal p {
+            margin-bottom: 10px;
+        }
+        
+        .search-link-all {
+    color: #042339; /* Normal link rengi */
+    text-decoration: underline; /* Normal link altı çizgisi */
+    cursor: pointer; /* Fare imleci el şeklinde */
+    
+    /* Diğer normal stil özellikleri buraya eklenir */
+
+    /* Maus üzerine geldiğinde stil değişiklikleri */
+    &:hover {
+      color: #555; /* Maus üzerine geldiğindeki link rengi */
+     
+    }
+
+    /* Tıklandığında stil değişiklikleri */
+    &:active {
+      color: #132836; /* Tıklandığında link rengi */
+      /* Diğer active stil özellikleri buraya eklenir */
+      
+      
+    }
+  }
+
+        /* Profil Detay Sayfa CSS */
+        #profile-detail-menu {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+            max-width: 750px;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        #profile-detail-menu a {
+            display: block;
+            color: #042339;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #profile-detail-menu a:hover {
+            color: #555 /* Tıklandığında rengi değiştirme */
+
+        }
+        
+  #all-searches-container, #search-box, #search-results {
+    display: block !important;
+  }
+
+
+  #go-back-link {
+    margin-left: 600px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #042339;
+    text-decoration: none;
+    transition: color 0.3s ease, box-shadow 0.3s ease; /* Renk ve box-shadow değişimi için geçiş efekti */
+
+    /* Gölge (box-shadow) efekti */
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.3);
+}
+
+#go-back-link:hover {
+    color: #26224e;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); /* Mouse üzerine gelindiğinde gölgeyi büyüt */
+}
+
+#go-back-link:active {
+    color: #132836;
+    box-shadow: none; /* Tıklandığında gölgeyi kaldır */
+}
+
+#go-back-link {
+    background-image: url('/static/back1.png');
+    display: inline-block;
+    width: 30px; /* Resmin genişliği */
+    height: 30px; /* Resmin yüksekliği */
+    background-size: cover; /* Resmi kaplamak için */
+    text-indent: -9999px; /* Metni ekrandan çıkar */
+}
+</style>
+    
+</head>
+
+<body>
+
+    
+    <div id="profile-container">
+        <!-- Kullanıcı bilgileri burada -->
+        <div id="username">
+            <h1>Profil</h1>
+            <p>Kullanıcı: {{ user.username }}</p>
+            <p id="search-count">Şuana kadar Yaptığınız Arama sayısı: {{ all_searches|length }}</p>
+        </div>
+        {% if all_searches %}
+            <!-- Arama Kutusu -->
+            <div id="search-box">
+                <form method="POST" action="/generate-content" id="search-form-all">
+                    {{ form.csrf_token }}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="search_query_all" id="search_query_all"
+                            placeholder="Arama kutusuna yazın" />
+                        <button type="button" class="btn btn-primary" id="search-btn-all" onclick="search()">Ara</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+        <!-- Arama Sonuçları -->
+        <div id="search-results" style="display: none;">
+            <ul id="search-results-list">
+                <!-- Arama sonuçları burada dinamik olarak eklenecek -->
+            </ul>
+        </div>
+
+        <!-- Tüm Arama Geçmişi -->
+<div id="all-searches-container">
+    <h1>Tüm Arama Geçmişim</h1>
+    <ul id="all-searches-list">
+        {% for search in all_searches %}
+            <li>
+                <p>
+                    {{ search.id }}: {{ search.response|truncate(70) }}
+                    <a href="#" class="search-link-all" data-response="{{ search.response }}"
+                        data-query="{{ search.query }}" style="font-size: 12px;">Detayları Göster</a>
+                    
+                    <!-- Add the delete button with an onclick event -->
+                    <button class="btn btn-danger btn-sm" onclick="deleteSearch('{{ search.id }}')" 
+                    style="background-color: #042339; color: #ffffff;" 
+                    onmouseover="this.style.backgroundColor='#cc3c3c'" 
+                    onmouseout="this.style.backgroundColor='#042339'">
+                Sil
+            </button>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="#" id="go-back-link"></a>
+
+    <!-- Tüm Arama Geçmişi Detay Modal -->
+    <div class="modal fade" id="all-search-modal" tabindex="-1" aria-labelledby="all-search-modal-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="all-search-modal-label">Arama Detayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body" id="all-search-response">
+                    <!-- Arama detayını paragraflar halinde göster -->
+                    <p>Bu birinci paragrafın içeriğidir.</p>
+                    <p>Bu ikinci paragrafın içeriğidir.</p>
+                    <p>Ve bu da üçüncü paragrafın içeriğidir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                
+                <!-- Bootstrap JavaScript dosyalarını bağla -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchBox = document.getElementById('search-box');
+            const searchResults = document.getElementById('search-results');
+            const searchBtnAll = document.getElementById('search-btn-all');
+            const searchQueryAll = document.getElementById('search_query_all');
+            const allSearchesList = document.getElementById('all-searches-list');
+            const searchLinksAll = document.querySelectorAll('.search-link-all, .search-link');
+        
+            // Bu fonksiyon, "Ara" düğmesine tıklandığında çağrılır
+            function search() {
+                const searchQueryValue = searchQueryAll.value.toLowerCase();
+                const matchingSearches = [];
+        
+                allSearchesList.querySelectorAll('li').forEach(searchItem => {
+                    const searchItemText = searchItem.textContent.toLowerCase();
+        
+                    if (searchItemText.includes(searchQueryValue)) {
+                        matchingSearches.push(searchItem);
+                    }
+                });
+        
+                // Arama sonuçlarını göster
+                showSearchResults(matchingSearches);
+            }
+        
+            // Bu fonksiyon, arama sonuçlarını gösterir
+            function showSearchResults(results) {
+                // Tüm sonuçları gizle
+                allSearchesList.querySelectorAll('li').forEach(searchItem => {
+                    searchItem.style.display = 'none';
+                });
+        
+                // Eşleşen sonuçları göster
+                results.forEach(searchItem => {
+                    searchItem.style.display = 'block';
+                });
+        
+                // Arama sonuçlarını göster
+                searchResults.style.display = 'block';
+            }
+        
+            // "Ara" düğmesine tıklanınca çalışacak olan fonksiyon
+            searchBtnAll.addEventListener('click', function () {
+                search();
+            });
+        
+            // Tüm arama geçmişi linklerini dinle
+            searchLinksAll.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const responseText = this.getAttribute('data-response');
+        
+                    if (this.classList.contains('search-link-all')) {
+                        showSearchDetails(responseText);
+                        $('#all-search-modal').modal('show');
+                    } else {
+                        document.getElementById('recent-search-response').innerHTML = responseText;
+                        $('#recent-search-modal').modal('show');
+                    }
+                });
+            });
+        
+            // "Geri Git" linkine tıklanınca çalışacak fonksiyon
+            const goBackLink = document.getElementById('go-back-link');
+            goBackLink.addEventListener('click', function () {
+                // Sayfayı yenile
+                location.reload();
+            });
+        
+            // Enter tuşuna basıldığında formun gönderilmesini engelle
+            searchBox.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                }
+            });
+        });
+        
+        // Bu fonksiyon, tüm arama geçmişi detaylarını gösterir
+        function showSearchDetails(response) {
+            const allSearchResponse = document.getElementById('all-search-response');
+        
+            // Temizle
+            allSearchResponse.innerHTML = '';
+        
+            // Detayları ekle
+            const details = response.split('\n').filter(Boolean); // Satırlara ayır ve boş olanları filtrele
+            details.forEach(detail => {
+                const listItem = document.createElement('li');
+                listItem.textContent = detail;
+                allSearchResponse.appendChild(listItem);
+            });
+        }
+
+        function deleteSearch(searchId) {
+        const userId = '{{ user.id }}';  // Kullanıcının kimliğini doğru bir şekilde almanız gerekir
+        fetch('/delete_search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `user_id=${userId}&search_id=${searchId}`,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Silme başarılı ise, sayfayı yeniden yükleyebilir veya arayüzü güncelleyebilirsiniz
+                location.reload();
+            } else {
+                console.error('Silme başarısız');
+            }
+        })
+        .catch(error => {
+            console.error('Hata:', error);
+        });
+    }
+        </script>
+        
+    {% endblock %}

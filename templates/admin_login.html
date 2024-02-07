@@ -1,0 +1,30 @@
+<!-- templates/admin_login.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Giriş</title>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Giriş</h1>
+    </header>
+
+    <main>
+        <form method="post" action="{{ url_for('admin_login') }}">
+            <label for="email">E-posta:</label>
+            <input type="email" name="email" required>
+
+            <label for="password">Şifre:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Giriş Yap</button>
+        </form>
+    </main>
+
+</body>
+</html>

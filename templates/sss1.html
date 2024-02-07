@@ -1,0 +1,155 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sık Sorulan Sorular</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+
+        body > header > h4 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border: 0 solid #042339;
+            border-radius: 10px;
+        }
+
+        header a {
+            color: #fff;
+            margin: 0 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        h3 {
+            color: #042339;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: #042339;
+        }
+
+        button {
+            background-color: #042339;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        /* Yeni eklenen stiller */
+        .cevap-form {
+            display: none;  /* Cevap formunu varsayılan olarak gizle */
+        }
+    </style>
+
+<body>
+    <body>
+
+    <form>
+        <h1>SIK SORULAN SORULAR.</h1>
+        <p></p>
+        
+
+
+
+        <h4 style="color: #042339;"><p>Soru 1: Uygulamanıza nasıl üye olabilirim?</p></h4>
+
+        <p>Cevap: Üye olmak için ana sayfamızdaki "Üye Ol" butonuna tıklayın, kişisel bilgilerinizi girin ve kayıt işlemini tamamlayın </p>
+
+        <h4 style="color: #042339;"><p>Soru 2: Üyelik gerekliliği nedir?</p></h4>
+
+        <p>Cevap: Üyelik, uygulamamızın hizmetler sunabilmesi ve değerlendirmelerinizi kaydedebilmeniz için gereklidir. </p>
+
+        <h4 style="color: #042339;"><p>Soru 3:  Ürün fotoğrafı nasıl gönderebilirim?</p></h4>
+        <p>Cevap: "Fotoğraf Gönder" sayfasından ürünün fotoğrafını yükleyebilirsiniz. Yapay zeka modelimiz, fotoğrafı analiz ederek ürünleri tanır. </p>
+
+        <h4 style="color: #042339;"><p>Soru 4:  Yapay zeka modeliniz nasıl çalışıyor?</p></h4>
+        <p>Cevap: "Cevap: Modelimiz, gönderdiğiniz fotoğrafları analiz ederek ürünleri tanır, yorumları tarar ve olumlu/olumsuz özellikleri belirler. </p>
+        <h4 style="color: #042339;"><p>Soru 5:  Analiz sonuçları neleri içerir?</p></h4>
+        <p>Cevap: Cevap: Analiz sonuçları, en iyi fiyatı, en kaliteli ürünü ve kullanıcıların beğendiği özellikleri içerir. </p>
+        <h4 style="color: #042339;"><p>Soru 6: Ürün karşılaştırma nasıl çalışır?</p></h4>
+        Cevap: Uygulamamız, gönderdiğiniz ürün fotoğraflarını analiz ederek benzer ürünleri tanır. Ardından, bu ürünleri özellikler ve kullanıcı değerlendirmeleri açısından karşılaştırır. </p>
+        <h4 style="color: #042339;"><p>Soru 7: Soru: Ürün değerlendirmelerimi nereden takip edebilirim?</p></h4>
+        <p>Cevap: "Profil" sayfanızdan tüm ürün değerlendirmelerinizi takip edebilir ve düzenleyebilirsiniz. </p>
+        <h4 style="color: #042339;"><p>Soru 8: Kayıtlı bilgilerim güvende mi?</p></h4>
+        <p>Cevap: Evet, bilgileriniz güvenli bir şekilde saklanır ve üçüncü şahıslarla paylaşılmaz.</p>
+        <h4 style="color: #042339;"><p>Soru 9: Giriş yapmadan uygulamayı kullanabilir miyim?</p></h4>
+        <p>Cevap: Uygulamamızı kullanabilmek için üye olmanız gerekmektedir. Ancak, uygulamayı keşfetmek için "Demo Modu"nu kullanabilirsiniz</p>
+        <h4 style="color: #042339;"><p>Soru 10: Kaç ürünü aynı anda karşılaştırabilirim?</p></h4>
+        <p>Cevap: Cevap: Şu anda uygulamamızda aynı anda en fazla 2 ürünü karşılaştırabilirsiniz. Bu sayede seçtiğiniz ürünler arasında daha iyi bir karşılaştırma yapabilirsiniz.</p>
+
+            <button type="button" onclick="window.location.href='/sss'">Form Sayfasına Git</button>
+
+
+           
+
+
+
+        
+</form>
+
+
+ 
+
+</body>
+
+</html>
+{% endblock %}

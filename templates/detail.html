@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Detaylar - {{ user.username }}</title>
+    <style>
+        /* Header Stili */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+        }
+
+        /* Form genişliği 1200px */
+        form {
+            max-width: 1000px;
+            margin: auto;
+            overflow: hidden; /* Clearfix için */
+            margin-top: 20px; /* Boşluk ekledim */
+        }
+
+        /* Kullanıcı bilgileri tablosu genişliği 900px */
+        .user-info-table {
+            width: 1000px;
+            margin: auto;
+            margin-bottom: 20px; /* Boşluk ekledim */
+        }
+
+        /* Diğer tablo genişliği 100% */
+        .other-table {
+            width: 450px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #042339;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* Action button stil */
+        .action-buttons {
+            margin-top: 10px;
+        }
+
+    .show-details-button {
+    background-color: #042339; /* Arka plan rengini istediğiniz renk koduyla değiştirin */
+    color: white; /* Metin rengini istediğiniz renk koduyla değiştirin */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.show-details-button:hover {
+    background-color: #262926; /* Hover durumunda arka plan rengini istediğiniz renk koduyla değiştirin */
+}
+
+        .show-details-button:hover {
+            background-color: #292e29;
+        }
+    </style>
+</head>
+<head>
+    <!-- Diğer head etiketleri -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<header>
+    <div id="logo-container">
+        <img src="/static/logo.jpg" alt="Nedir Resmi" width="120" height="129">
+    </div>
+</header>
+
+<body>
+
+    <head>
+        <!-- Diğer head etiketleri -->
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    
+    <body>
+    
+        <!-- Header -->
+        <!-- Header ile ilgili kısımlar burada yer alacak -->
+    
+        <!-- Diğer Tablo -->
+        <form method="post" action="{{ url_for('process_users') }}">
+            <h1>Kullanıcı: {{ user.username }}</h1>
+            <div class="user-info-table">
+                <table>
+                    <h3>Kullanıcı Detayları</h3>
+                    <tr>
+                        <td>Kullanıcı ID:</td>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kullanıcı Adı:</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Toplam Yapılan Arama Sayısı:</td>
+                        <td>{{ user_search_counts.get(user.id, 0) }}</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="search-history">
+                <h3>Arama Geçmişi</h3>
+                <ul>
+                    {% for search in search_history %}
+                        <li>
+                            
+                            <strong>Arama Sonucu:</strong>
+                            {% if search.response | length > 250 %}
+                            {{ search.id }}: {{ search.response|truncate(100) }}
+                                <span data-toggle="modal" data-target="#responseModal{{ search.id }}">Detay Görüntüle</span>
+                                <!-- Modal -->
+                                <div class="modal" id="responseModal{{ search.id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Arama Detayı</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <!-- Modal Body -->
+                                            <div class="modal-body">
+                                                {{ search.response }}
+                                            </div>
+                                            
+                                            <!-- Modal Footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                            </div>
+                                            <div class="modal-body" id="all-search-response">
+                                                
+                                            </div>
+                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                {{ search.response }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+    
+            <div class="action-buttons">
+                <a class="show-details-button" href="{{ url_for('dashboard') }}">Geri Dön</a>
+            </div>
+        </form>
+
+</html>

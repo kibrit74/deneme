@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin List</title>
+</head>
+<body>
+    <h1>Admin List</h1>
+    <ul>
+        {% for admin_instance in admin_list %}
+            <li>
+                <strong>ID:</strong> {{ admin_instance.id }}<br>
+                <strong>Name:</strong> {{ admin_instance.name }}<br>
+                <strong>Email:</strong> {{ admin_instance.email }}<br>
+                <strong>Password Hash:</strong> {{ admin_instance.password_hash }}<br>
+                <strong>Password Method:</strong> {{ admin_instance.password_method }}<br>
+                <br>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

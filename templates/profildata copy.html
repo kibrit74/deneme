@@ -1,0 +1,346 @@
+{% extends 'base.html' %}
+
+{% block title %}Profi{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Ürün Değerlendirme Uygulaması</title>
+
+    <!-- Bootstrap CSS dosyasını bağla -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+
+    <style>
+     
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #ffffff;
+        color: #042339;
+        margin: 0;
+        padding: 0;
+        font-size: 16px; /* Metin boyutu */
+        line-height: 1.4; /* Paragraf aralığı */
+    }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #042339;
+            padding: 10px;
+        }
+        body > header > h4 {
+        font-size: 16px; /* Veya istediğiniz başlık boyutu */
+        font-weight: bold;
+    }
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container img {
+            width: 100px;
+            height: 100px;
+            border: 0 solid #042339;
+            border-radius: 10px;
+        }
+
+        header a {
+            color: #fff;
+            margin: 0 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        nav {
+            background-color: #454c55;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+            margin-right: 20px;
+        }
+
+        nav a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: color 0.3s, font-size 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #555;
+            color: #fff; /* Tıklandığında rengi değiştirme */
+        }
+
+        #profile-container {
+            max-width: 750px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        #profile-image img {
+            width: 100px;
+            height: 100px;
+            border: 0px solid #042339;
+            border-radius: 10px;
+        }
+
+        #username {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        #recent-searches {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        #recent-searches h2 {
+            color: #042339;
+            font-size: 18px;
+        }
+
+        #recent-searches ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #recent-searches li {
+            margin-bottom: 10px;
+        }
+
+        .search-link,
+        .search-link-all {
+            font-size: 12px; /* Yazı boyutunu 12px olarak güncelle */
+            cursor: pointer;
+            text-decoration: underline; /* Yazı stilini altı çizili yap */
+        }
+
+        .search-link-all {
+            color: #042339; /* Detayları Göster link rengini belirt */
+        }
+
+        .search-link {
+            color: black; /* Son 5 arama link rengini siyah yap */
+        }
+
+        #all-searches-container {
+            display: none;
+            margin-top: 20px; /* Aramalar arasındaki boşluğu ayarlamak için */
+        }
+
+        .all-searches-title {
+            font-style: italic; /* Yazı stilini italik yap */
+            margin-bottom: 10px;
+        }
+
+        #show-all-searches-btn {
+            color: #fff;
+            background-color: #042339;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #show-all-searches-btn:hover {
+            background-color: #042339;
+        }
+
+        #all-searches {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        #all-searches h2 {
+            color: #042339;
+            font-size: 18px;
+        }
+
+        #all-searches ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #all-searches li {
+            margin-bottom: 10px;
+        }
+
+        #all-searches a {
+            color: #042339;
+            font-size: 12px; /* Yazı boyutunu 12px olarak güncelle */
+            text-decoration: underline; /* Yazı stilini altı çizili yap */
+            cursor: pointer;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+            color: #042339;
+        }
+
+        #search-modal p {
+            margin-bottom: 10px;
+        }
+
+        /* Profil Detay Sayfa CSS */
+        #profile-detail-menu {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #fff;
+            max-width: 750px;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(8, 98, 214, 0.1);
+        }
+
+        #profile-detail-menu a {
+            display: block;
+            color: #042339;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #profile-detail-menu a:hover {
+            color: #042339; /* Tıklandığında rengi değiştirme */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="profile-container">
+        <div id="profile-image">
+            <!-- Profil resmi -->
+        </div>
+
+        <div id="username">
+            <h1>Profil</h1>
+            <p>Kullanıcı: {{ user.username }}</p>
+
+            <div id="recent-searches">
+                <h1>Son Arama Özetleri</h1>
+                <ul>
+                    {% for search_summary in recent_search_summaries %}
+                        <li>
+                            <a href="#" class="search-link" data-bs-toggle="modal" data-bs-target="#search-modal" data-response="{{ search_summary.response }}">
+                                {{ search_summary.query }}: {{ search_summary.response|truncate(85) }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="button" class="btn btn-primary" id="show-all-searches-btn">Tüm Arama Geçmişim</button>
+            </div>
+
+            <div id="all-searches-container">
+                <h1 class="all-searches-title">Tüm Arama Geçmişi</h1>
+                <ul>
+                    {% for search in all_searches %}
+                        <li>
+                            <p>
+                                {{ search.id }}: {{ search.response|truncate(70) }}
+                                <a href="#" class="search-link-all" data-response="{{ search.response }}" data-query="{{ search.query }}" style="font-size: 12px;">Detayları Göster</a>
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div id="search-box-all">
+                    <form method="POST" action="/generate-content" id="search-form-all">
+                        {{ form.csrf_token }}
+                        <input type="text" name="search_query_all" id="search_query_all" placeholder="Arama kutusuna yazın" />
+                        <button type="submit" class="btn btn-primary" id="search-btn-all">Ara</button>
+                    </form>
+                </div>
+
+        <div id="search-box">
+            <form method="POST" action="/generate-content">
+                {{ form.csrf_token }}
+                <input type="text" name="search_query" placeholder="Arama kutusuna yazın" />
+                <button type="submit">Ara</button>
+            </form>
+        </div>
+    </div>
+   
+    <!-- Modal -->
+    <div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-label" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="search-modal-label">Arama Detayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body" id="search-response">
+                    <!-- Arama detayını paragraflar halinde göster -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Bootstrap JavaScript dosyalarını bağla -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const searchLinksAll = document.querySelectorAll('.search-link-all, .search-link');
+            const searchResponse = document.getElementById('search-response');
+            const searchFormAll = document.getElementById('search-form-all');
+            
+            searchLinksAll.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const responseText = this.getAttribute('data-response');
+                    // Paragraflar halinde göstermek için <p> etiketlerini ekle
+                    searchResponse.innerHTML = responseText.replace(/\n/g, '<p>').replace(/<\/p><p>/g, '<br><br>');
+                    $('#search-modal').modal('show');
+                });
+            });
+    
+            // Tüm Arama Geçmişi Düğmesi
+            $('#show-all-searches-btn').on('click', function () {
+                $('#recent-searches').hide();
+                $('#all-searches-container').show();
+            });
+    
+            searchFormAll.addEventListener('submit', function (event) {
+                // İlgili işlemleri yaparak sonuçları göstermek üzere özelleştirilebilirsiniz.
+                event.preventDefault();
+                const queryText = document.getElementById('search_query_all').value;
+                // İlgili işlemleri yaparak sonuçları göster
+            });
+        });
+    </script>
+    
+</html>
+{% endblock %}
